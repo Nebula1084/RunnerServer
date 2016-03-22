@@ -19,14 +19,12 @@ public class UserContoller {
         List<User> uList = repository.findByAccount(account);
         if (uList.isEmpty()) {
             return "account not exist.";
-        }
-        else if (uList.get(0).verifypwd(passwd)) {
+        } else if (uList.get(0).verifypwd(passwd)) {
             User user = uList.get(0);
             user.login();
             repository.save(user);
             return "login success";
-        }
-        else
+        } else
             return "passwd incorrect";
     }
 
@@ -38,8 +36,7 @@ public class UserContoller {
             newUser.login();
             repository.save(newUser);
             return newUser;
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -67,11 +64,5 @@ public class UserContoller {
 //        repository.save(user);
 //        return "deposit success";
 //    }
-
-    @RequestMapping("/inherit")
-    public String inherit() {
-        Runner runner = new Runner("yym", "inherit", 0);
-        repository.save(runner);
-        return "Success";
-    }
+    
 }
