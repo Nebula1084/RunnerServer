@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8" />
+
+  </head>
+
+  <body>
+
+    <h1>User Test</h1>
+
+    <div class="form">
+      <form action="/register" method="POST">
+        <input type="text" placeholder="account" name="account" />
+        <input type="password" placeholder="password" name="passwd"/>
+        <button>register</button>
+      </form>
+
+
+      <br/><br/>
+
+      <form action="/login" method="POST">
+        <input type="text" placeholder="account" name="account" />
+        <input type="password" placeholder="password" name="passwd"/>
+        <button>login</button>
+      </form>
+
+      <br/><br/>
+
+      <form action="/info" method="GET">
+        <input type="text" placeholder="account" name="account" />
+        <button>info</button>
+      </form>
+
+      <br/><br/>
+
+      <form action="/setnickname" method="POST">
+        <input type="text" placeholder="account" name="account" />
+        <input type="text" placeholder="nickname" name="nickname" />
+        <button>setnickname</button>
+      </form>
+
+      <br/><br/>
+
+      <form action="/setaddress" method="POST">
+        <input type="text" placeholder="account" name="account" />
+        <input type="text" placeholder="address" name="address" />
+        <button>setaddress</button>
+      </form>
+
+      <br/><br/>
+
+      <form action="/setaveragerate" method="POST">
+        <input type="text" placeholder="account" name="account" />
+        <input type="text" placeholder="averagerate" name="averagerate" />
+        <button>setaveragerate</button>
+      </form>
+
+      <br/><br/>
+
+      <form action="/deposit" method="POST">
+        <input type="text" placeholder="account" name="account" />
+        <input type="text" placeholder="amount" name="amount" />
+        <button>deposit</button>
+      </form>
+
+      <br/><br/>
+
+      <form action="/pay" method="POST">
+        <input type="text" placeholder="account1" name="account1" />
+        <input type="text" placeholder="account2" name="account2" />
+        <input type="text" placeholder="amount" name="amount" />
+        <button>pay</button>
+      </form>
+
+      <br/><br/>
+
+      <form action="/uploadicon" method="POST" enctype="multipart/form-data">
+        <input type="text" placeholder="account" name="account" />
+        <input type="file" name="iconfile" id="fileToUpload" onchange="fileSelected();"/>
+        <button>uploadicon</button>
+      </form>
+
+      <br/><br/>
+
+      <form action="/geticon" method="GET">
+        <input type="text" placeholder="account" name="account" />
+        <button>geticon</button>
+      </form>
+
+    </div>
+
+  </body>
+</html>

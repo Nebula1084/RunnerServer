@@ -27,6 +27,8 @@ targetCompatibility = 1.8
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-data-rest")
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+    compile("net.sourceforge.nekohtml:nekohtml")
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile("mysql:mysql-connector-java:5.1.6")
     compile("com.h2database:h2")
