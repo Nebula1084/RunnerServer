@@ -1,6 +1,7 @@
 package se.runner.user;
 
 
+import javax.annotation.Nullable;
 import javax.annotation.Resource;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -10,14 +11,15 @@ public class User {
 
     @Id
     private String account;
+
     private String passwd;
     private String nickname;
     private String icon;
     private int balance;
     private String address;
-    private float averagerate;
     private int login;
 
+    private double avgrate;
 
     protected User() {
     }
@@ -30,6 +32,7 @@ public class User {
         this.balance = 0;
         this.address = "null";
         this.login = 0;
+        this.avgrate = 1.0;
     }
 
     public boolean verifypwd(String passwd) {
@@ -81,8 +84,8 @@ public class User {
         return balance;
     }
 
-    public float getAveragerate() {
-        return averagerate;
+    public double getAvgrate() {
+        return avgrate;
     }
 
     public void setPasswd(String passwd) {
@@ -101,8 +104,8 @@ public class User {
         this.address = address;
     }
 
-    public void setAveragerate(float averagerate){
-        this.averagerate = averagerate;
+    public void setAvgrate(double avgrate){
+        this.avgrate = avgrate;
     }
 
     @Override

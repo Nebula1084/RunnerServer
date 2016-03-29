@@ -89,7 +89,7 @@ public class UserContoller {
     @RequestMapping("/setaveragerate")
     public User setaveragerate(@RequestParam(value = "account") String account, @RequestParam(value = "averagerate") String averagerate) {
         User user = repository.findByAccount(account).get(0);
-        user.setAveragerate(Float.parseFloat(averagerate));
+        user.setAvgrate(Double.parseDouble(averagerate));
         repository.save(user);
         return user;
     }
@@ -103,7 +103,7 @@ public class UserContoller {
     }
 
 
-    @RequestMapping("/icon")
+    @RequestMapping("/geticon")
     public void geticon(@RequestParam(value = "account") String account) throws IOException {
 
         User user = repository.findByAccount(account).get(0);
@@ -151,6 +151,12 @@ public class UserContoller {
         repository.save(user2);
 
         return "paying";
+    }
+
+    @RequestMapping(value = "/drop", method = RequestMethod.POST)
+    public String drop() {
+        repository.deleteAll();
+        return "Drop All";
     }
     
 }
