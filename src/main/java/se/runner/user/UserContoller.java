@@ -130,7 +130,7 @@ public class UserContoller {
         User user = getUser(account);
         user.deposit(Double.parseDouble(amount));
         repository.save(user);
-        return "deposit success";
+        return user;
     }
 
 

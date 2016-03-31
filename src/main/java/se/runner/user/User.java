@@ -126,6 +126,11 @@ public class User {
         this.address = address;
     }
 
+
+    public int getLogin() {
+        return login;
+    }
+
     public void setAvgrate(double avgrate){
         this.avgrate = avgrate;
     }
