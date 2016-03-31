@@ -181,7 +181,7 @@ public class UserContoller {
         user2.deposit(Integer.parseInt(amount));
         repository.save(user2);
 
-        return "paying";
+        return user1;
     }
 
     @RequestMapping(value = "/drop", method = RequestMethod.POST)
