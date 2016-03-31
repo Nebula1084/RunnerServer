@@ -189,5 +189,23 @@ public class UserContoller {
         repository.deleteAll();
         return "Drop All";
     }
-    
+
+    @RequestMapping(value = "/setlatitude", method = RequestMethod.POST)
+    public Object setlatitude(@RequestParam(value = "account") String account, @RequestParam(value = "latitude") String latitude) {
+        if (!checkUser(account)) return "not exist";
+        User user = getUser(account);
+        user.setLatitude(Double.parseDouble(latitude));
+        repository.save(user);
+        return user;
+    }
+
+
+    @RequestMapping(value = "/setlongtitude", method = RequestMethod.POST)
+    public Object setlongtitude(@RequestParam(value = "account") String account, @RequestParam(value = "longtitude") String longtitude) {
+        if (!checkUser(account)) return "not exist";
+        User user = getUser(account);
+        user.setLongtitude(Double.parseDouble(longtitude));
+        repository.save(user);
+        return user;
+    }
 }

@@ -6,8 +6,11 @@ import javax.annotation.Resource;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+
+
 @Entity
 public class User {
+
 
     @Id
     private String account;
@@ -18,6 +21,9 @@ public class User {
     private double balance;
     private String address;
     private int login;
+
+    private double longtitude;
+    private double latitude;
 
     private double avgrate;
 
@@ -98,6 +104,22 @@ public class User {
 
     public void setIcon(String icon) {
         this.icon = icon;
+    }
+
+
+    public void setLongtitude(double longtitude){
+        this.longtitude = longtitude;
+    }
+    public void setLatitude(double latitude){
+        this.latitude = latitude;
+    }
+
+    public double getLongtitude(){
+        return longtitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
     }
 
     public void setAddress(String address) {
