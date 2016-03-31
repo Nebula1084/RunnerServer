@@ -27,9 +27,17 @@
 
       <br/><br/>
 
-      <form action="/info" method="GET">
+      <form action="/info" method="POST">
         <input type="text" placeholder="account" name="account" />
         <button>info</button>
+      </form>
+
+      <br/><br/>
+
+      <form action="/setpasswd" method="POST">
+        <input type="text" placeholder="account" name="account" />
+        <input type="text" placeholder="passwd" name="passwd" />
+        <button>setpasswd</button>
       </form>
 
       <br/><br/>
@@ -83,7 +91,7 @@
 
       <br/><br/>
 
-      <form action="/geticon" method="GET">
+      <form action="/geticon" method="POST">
         <input type="text" placeholder="account" name="account" />
         <button>geticon</button>
       </form>

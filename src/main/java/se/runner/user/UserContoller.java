@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -27,8 +28,24 @@ public class UserContoller {
     @Autowired
     private HttpServletResponse response;
 
+
+    private boolean checkUser(String account){
+        List<User> uList = repository.findByAccount(account);
+        if (uList.isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private User getUser(String account){
+        return repository.findByAccount(account).get(0);
+    }
+
+
+
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(@RequestParam(value = "account") String account, @RequestParam(value = "passwd") String passwd) {
+    public Object login(@RequestParam(value = "account") String account, @RequestParam(value = "passwd") String passwd) {
         List<User> uList = repository.findByAccount(account);
         if (uList.isEmpty()) {
             return "account not exist.";
@@ -44,7 +61,7 @@ public class UserContoller {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public User register(@RequestParam(value = "account") String account, @RequestParam(value = "passwd") String passwd) {
+    public Object register(@RequestParam(value = "account") String account, @RequestParam(value = "passwd") String passwd) {
         if (repository.findByAccount(account).isEmpty()) {
             User newUser = new User(account, passwd);
             repository.save(newUser);
@@ -52,61 +69,75 @@ public class UserContoller {
             repository.save(newUser);
             return newUser;
         } else {
-            return null;
+            return "already exit";
         }
     }
 
-    @RequestMapping("/logout")
-    public String logout(@RequestParam(value = "account") String account) {
-        User user = repository.findByAccount(account).get(0);
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    public Object logout(@RequestParam(value = "account") String account) {
+        if (!checkUser(account)) return "not exit";
+        User user = getUser(account);
         user.logout();
         repository.save(user);
         return "logout success";
     }
 
-    @RequestMapping("/info")
-    public User info(@RequestParam(value = "account") String account) {
-        User user = repository.findByAccount(account).get(0);
+    @RequestMapping(value = "/info", method = RequestMethod.POST)
+    public Object info(@RequestParam(value = "account") String account) {
+        if (!checkUser(account)) return "not exit";
+        else return getUser(account);
+    }
+
+    @RequestMapping(value = "/setpasswd", method = RequestMethod.POST)
+    public Object setpasswd(@RequestParam(value = "account") String account, @RequestParam(value = "passwd") String passwd) {
+        if (!checkUser(account)) return "not exit";
+        User user = getUser(account);
+        user.setPasswd(passwd);
+        repository.save(user);
         return user;
     }
 
-    @RequestMapping("/setnickname")
-    public User setnickname(@RequestParam(value = "account") String account, @RequestParam(value = "nickname") String nickname) {
-        User user = repository.findByAccount(account).get(0);
+    @RequestMapping(value = "/setnickname", method = RequestMethod.POST)
+    public Object setnickname(@RequestParam(value = "account") String account, @RequestParam(value = "nickname") String nickname) {
+        if (!checkUser(account)) return "not exit";
+        User user = getUser(account);
         user.setNickname(nickname);
         repository.save(user);
         return user;
     }
 
-    @RequestMapping("/setaddress")
-    public User info(@RequestParam(value = "account") String account, @RequestParam(value = "address") String address) {
-        User user = repository.findByAccount(account).get(0);
+    @RequestMapping(value = "/setaddress", method = RequestMethod.POST)
+    public Object info(@RequestParam(value = "account") String account, @RequestParam(value = "address") String address) {
+        if (!checkUser(account)) return "not exit";
+        User user = getUser(account);
         user.setAddress(address);
         repository.save(user);
         return user;
     }
 
-    @RequestMapping("/setaveragerate")
-    public User setaveragerate(@RequestParam(value = "account") String account, @RequestParam(value = "averagerate") String averagerate) {
-        User user = repository.findByAccount(account).get(0);
+    @RequestMapping(value = "/setaveragerate", method = RequestMethod.POST)
+    public Object setaveragerate(@RequestParam(value = "account") String account, @RequestParam(value = "averagerate") String averagerate) {
+        if (!checkUser(account)) return "not exit";
+        User user = getUser(account);
         user.setAvgrate(Double.parseDouble(averagerate));
         repository.save(user);
         return user;
     }
 
     @RequestMapping(value = "/deposit", method = RequestMethod.POST)
-    public String deposit(@RequestParam(value = "account") String account, @RequestParam(value = "amount") String amount) {
-        User user = repository.findByAccount(account).get(0);
-        user.deposit(Integer.parseInt(amount));
+    public Object deposit(@RequestParam(value = "account") String account, @RequestParam(value = "amount") String amount) {
+        if (!checkUser(account)) return "not exit";
+        User user = getUser(account);
+        user.deposit(Double.parseDouble(amount));
         repository.save(user);
         return "deposit success";
     }
 
 
-    @RequestMapping("/geticon")
+    @RequestMapping(value = "/geticon", method = RequestMethod.POST)
     public void geticon(@RequestParam(value = "account") String account) throws IOException {
+        User user = getUser(account);
 
-        User user = repository.findByAccount(account).get(0);
         File file = new File("src/main/resources/icon/" + user.getIcon());
 
         FileInputStream inputStream = new FileInputStream(file);
@@ -125,7 +156,7 @@ public class UserContoller {
 
 
     @RequestMapping(value = "/uploadicon", method = RequestMethod.POST)
-    public String uploadicon(@RequestParam(value = "account") String account, @RequestParam("iconfile") MultipartFile iconfile) throws IOException {
+    public Object uploadicon(@RequestParam(value = "account") String account, @RequestParam("iconfile") MultipartFile iconfile) throws IOException {
 
         String filePath = "src/main/resources/icon/" + iconfile.getOriginalFilename();
         BufferedOutputStream stream =
@@ -133,7 +164,7 @@ public class UserContoller {
         stream.write(iconfile.getBytes());
         stream.close();
 
-        User user = repository.findByAccount(account).get(0);
+        User user = getUser(account);
         user.setIcon(iconfile.getOriginalFilename());
         repository.save(user);
 
@@ -141,7 +172,7 @@ public class UserContoller {
     }
 
     @RequestMapping(value = "/pay", method = RequestMethod.POST)
-    public String pay(@RequestParam(value = "account1") String account1,  @RequestParam(value = "account2") String account2, @RequestParam(value = "amount") String amount) {
+    public Object pay(@RequestParam(value = "account1") String account1,  @RequestParam(value = "account2") String account2, @RequestParam(value = "amount") String amount) {
         User user1 = repository.findByAccount(account1).get(0);
         user1.pay(Integer.parseInt(amount));
         repository.save(user1);
@@ -154,7 +185,7 @@ public class UserContoller {
     }
 
     @RequestMapping(value = "/drop", method = RequestMethod.POST)
-    public String drop() {
+    public Object drop() {
         repository.deleteAll();
         return "Drop All";
     }

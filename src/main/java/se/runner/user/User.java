@@ -15,7 +15,7 @@ public class User {
     private String passwd;
     private String nickname;
     private String icon;
-    private int balance;
+    private double balance;
     private String address;
     private int login;
 
@@ -29,7 +29,7 @@ public class User {
         this.passwd = passwd;
         this.nickname = "null";
         this.icon = "default.jpg";
-        this.balance = 0;
+        this.balance = 0.0;
         this.address = "null";
         this.login = 0;
         this.avgrate = 1.0;
@@ -47,7 +47,7 @@ public class User {
         login = 0;
     }
 
-    public boolean pay(int amount) {
+    public boolean pay(float amount) {
         if (balance < amount)
             return false;
         else {
@@ -56,7 +56,7 @@ public class User {
         }
     }
 
-    public void deposit(int m) {
+    public void deposit(double m) {
         balance += m;
     }
 
@@ -80,7 +80,7 @@ public class User {
         return icon;
     }
 
-    public int getBalance() {
+    public double getBalance() {
         return balance;
     }
 
@@ -108,10 +108,5 @@ public class User {
         this.avgrate = avgrate;
     }
 
-    @Override
-    public String toString() {
-        return String.format(
-                "User[account=%s, passwd='%s', balance='%d']",
-                account, passwd, balance);
-    }
+
 }
