@@ -47,7 +47,7 @@ public class User {
         login = 0;
     }
 
-    public boolean pay(float amount) {
+    public boolean pay(double amount) {
         if (balance < amount)
             return false;
         else {

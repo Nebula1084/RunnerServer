@@ -69,13 +69,13 @@ public class UserContoller {
             repository.save(newUser);
             return newUser;
         } else {
-            return "already exit";
+            return "already exist";
         }
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     public Object logout(@RequestParam(value = "account") String account) {
-        if (!checkUser(account)) return "not exit";
+        if (!checkUser(account)) return "not exist";
         User user = getUser(account);
         user.logout();
         repository.save(user);
@@ -84,13 +84,13 @@ public class UserContoller {
 
     @RequestMapping(value = "/info", method = RequestMethod.POST)
     public Object info(@RequestParam(value = "account") String account) {
-        if (!checkUser(account)) return "not exit";
+        if (!checkUser(account)) return "not exist";
         else return getUser(account);
     }
 
     @RequestMapping(value = "/setpasswd", method = RequestMethod.POST)
     public Object setpasswd(@RequestParam(value = "account") String account, @RequestParam(value = "passwd") String passwd) {
-        if (!checkUser(account)) return "not exit";
+        if (!checkUser(account)) return "not exist";
         User user = getUser(account);
         user.setPasswd(passwd);
         repository.save(user);
@@ -99,7 +99,7 @@ public class UserContoller {
 
     @RequestMapping(value = "/setnickname", method = RequestMethod.POST)
     public Object setnickname(@RequestParam(value = "account") String account, @RequestParam(value = "nickname") String nickname) {
-        if (!checkUser(account)) return "not exit";
+        if (!checkUser(account)) return "not exist";
         User user = getUser(account);
         user.setNickname(nickname);
         repository.save(user);
@@ -108,7 +108,7 @@ public class UserContoller {
 
     @RequestMapping(value = "/setaddress", method = RequestMethod.POST)
     public Object info(@RequestParam(value = "account") String account, @RequestParam(value = "address") String address) {
-        if (!checkUser(account)) return "not exit";
+        if (!checkUser(account)) return "not exist";
         User user = getUser(account);
         user.setAddress(address);
         repository.save(user);
@@ -117,7 +117,7 @@ public class UserContoller {
 
     @RequestMapping(value = "/setaveragerate", method = RequestMethod.POST)
     public Object setaveragerate(@RequestParam(value = "account") String account, @RequestParam(value = "averagerate") String averagerate) {
-        if (!checkUser(account)) return "not exit";
+        if (!checkUser(account)) return "not exist";
         User user = getUser(account);
         user.setAvgrate(Double.parseDouble(averagerate));
         repository.save(user);
@@ -126,7 +126,7 @@ public class UserContoller {
 
     @RequestMapping(value = "/deposit", method = RequestMethod.POST)
     public Object deposit(@RequestParam(value = "account") String account, @RequestParam(value = "amount") String amount) {
-        if (!checkUser(account)) return "not exit";
+        if (!checkUser(account)) return "not exist";
         User user = getUser(account);
         user.deposit(Double.parseDouble(amount));
         repository.save(user);
@@ -138,7 +138,7 @@ public class UserContoller {
     public void geticon(@RequestParam(value = "account") String account) throws IOException {
         User user = getUser(account);
 
-        File file = new File("src/main/resources/icon/" + user.getIcon());
+        File file = new File("RunnerServer/src/main/resources/icon/" + user.getIcon());
 
         FileInputStream inputStream = new FileInputStream(file);
         byte[] data = new byte[(int)file.length()];
@@ -158,7 +158,7 @@ public class UserContoller {
     @RequestMapping(value = "/uploadicon", method = RequestMethod.POST)
     public Object uploadicon(@RequestParam(value = "account") String account, @RequestParam("iconfile") MultipartFile iconfile) throws IOException {
 
-        String filePath = "src/main/resources/icon/" + iconfile.getOriginalFilename();
+        String filePath = "RunnerServer/src/main/resources/icon/" + iconfile.getOriginalFilename();
         BufferedOutputStream stream =
                 new BufferedOutputStream(new FileOutputStream(new File(filePath)));
         stream.write(iconfile.getBytes());
@@ -174,11 +174,11 @@ public class UserContoller {
     @RequestMapping(value = "/pay", method = RequestMethod.POST)
     public Object pay(@RequestParam(value = "account1") String account1,  @RequestParam(value = "account2") String account2, @RequestParam(value = "amount") String amount) {
         User user1 = repository.findByAccount(account1).get(0);
-        user1.pay(Integer.parseInt(amount));
+        user1.pay(Double.parseDouble(amount));
         repository.save(user1);
 
         User user2 = repository.findByAccount(account2).get(0);
-        user2.deposit(Integer.parseInt(amount));
+        user2.deposit(Double.parseDouble(amount));
         repository.save(user2);
 
         return user1;
