@@ -138,7 +138,7 @@ public class UserContoller {
     public void geticon(@RequestParam(value = "account") String account) throws IOException {
         User user = getUser(account);
 
-        File file = new File("RunnerServer/src/main/resources/icon/" + user.getIcon());
+        File file = new File("src/main/resources/icon/" + user.getIcon());
 
         FileInputStream inputStream = new FileInputStream(file);
         byte[] data = new byte[(int)file.length()];
@@ -158,7 +158,7 @@ public class UserContoller {
     @RequestMapping(value = "/uploadicon", method = RequestMethod.POST)
     public Object uploadicon(@RequestParam(value = "account") String account, @RequestParam("iconfile") MultipartFile iconfile) throws IOException {
 
-        String filePath = "RunnerServer/src/main/resources/icon/" + iconfile.getOriginalFilename();
+        String filePath = "src/main/resources/icon/" + iconfile.getOriginalFilename();
         BufferedOutputStream stream =
                 new BufferedOutputStream(new FileOutputStream(new File(filePath)));
         stream.write(iconfile.getBytes());
