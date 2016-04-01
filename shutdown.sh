@@ -1,0 +1,1 @@
+kill -9 `ps -ef | grep RunnerServer | sed -n '1p' | awk '{print $2}'`
