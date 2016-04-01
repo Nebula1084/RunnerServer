@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 
-
 @Entity
 public class User {
 
@@ -24,6 +23,9 @@ public class User {
 
     private double longtitude;
     private double latitude;
+
+    private int launchTaskNum;
+    private int takeTaskNum;
 
     private double avgrate;
 
@@ -107,14 +109,31 @@ public class User {
     }
 
 
-    public void setLongtitude(double longtitude){
+    public void setLongtitude(double longtitude) {
         this.longtitude = longtitude;
     }
-    public void setLatitude(double latitude){
+
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public double getLongtitude(){
+    public void setLaunchTaskNum(int launchTaskNum) {
+        this.launchTaskNum = launchTaskNum;
+    }
+
+    public void setTakeTaskNum(int takeTaskNum) {
+        this.takeTaskNum = takeTaskNum;
+    }
+
+    public int getLaunchTaskNum() {
+        return launchTaskNum;
+    }
+
+    public int getTakeTaskNum() {
+        return takeTaskNum;
+    }
+
+    public double getLongtitude() {
         return longtitude;
     }
 
@@ -131,7 +150,7 @@ public class User {
         return login;
     }
 
-    public void setAvgrate(double avgrate){
+    public void setAvgrate(double avgrate) {
         this.avgrate = avgrate;
     }
 

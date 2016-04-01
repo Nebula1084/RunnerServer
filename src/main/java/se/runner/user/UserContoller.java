@@ -29,6 +29,9 @@ public class UserContoller {
     private HttpServletResponse response;
 
 
+
+
+
     private boolean checkUser(String account){
         List<User> uList = repository.findByAccount(account);
         if (uList.isEmpty()) {
@@ -36,6 +39,13 @@ public class UserContoller {
         } else {
             return true;
         }
+    }
+
+
+    @RequestMapping(value = "/checkuser", method = RequestMethod.POST)
+    public Object checkaccount(@RequestParam(value = "account") String account) {
+        if (!checkUser(account)) return "no";
+        else return "yes";
     }
 
     private User getUser(String account){
@@ -205,6 +215,25 @@ public class UserContoller {
         if (!checkUser(account)) return "not exist";
         User user = getUser(account);
         user.setLongtitude(Double.parseDouble(longtitude));
+        repository.save(user);
+        return user;
+    }
+
+    @RequestMapping(value = "/setlaunchtasknum", method = RequestMethod.POST)
+    public Object setlauchtasknum(@RequestParam(value = "account") String account, @RequestParam(value = "launchtasknum") String launchtasknum) {
+        if (!checkUser(account)) return "not exist";
+        User user = getUser(account);
+        user.setLaunchTaskNum(Integer.parseInt(launchtasknum));
+        repository.save(user);
+        return user;
+    }
+
+
+    @RequestMapping(value = "/settaketasknum", method = RequestMethod.POST)
+    public Object settaketasknum(@RequestParam(value = "account") String account, @RequestParam(value = "taketasknum") String taketasknum) {
+        if (!checkUser(account)) return "not exist";
+        User user = getUser(account);
+        user.setTakeTaskNum(Integer.parseInt(taketasknum));
         repository.save(user);
         return user;
     }
