@@ -31,36 +31,37 @@ public class TaskController {
     public Task publish(@RequestParam(value = "account") String account,
                           @RequestParam(value = "consignee") String consignee,
                           @RequestParam(value = "category") String category,
-                          @RequestParam(value = "pay") float pay,
-                          @RequestParam(value = "delivery_time") long delivery_time,
-                          @RequestParam(value = "receiving_time") long receiving_time,
+                          @RequestParam(value = "pay") String pay,
+                          @RequestParam(value = "delivery_time") String delivery_time,
+                          @RequestParam(value = "receiving_time") String receiving_time,
                           @RequestParam(value = "delivery_address") String delivery_address,
                           @RequestParam(value = "receiving_address") String receiving_address,
-                          @RequestParam(value = "emergency") int emergency) {
-        Task task = new Task(account, consignee, category, pay,
-                emergency, delivery_time, receiving_time, delivery_address, receiving_address);
+                          @RequestParam(value = "emergency") String emergency) {
+        Task task = new Task(account, consignee, category, Float.parseFloat(pay),
+                Integer.parseInt(emergency), Long.parseLong(delivery_time),
+                Long.parseLong(receiving_time), delivery_address, receiving_address);
         repository.save(task);
         return task;
     }
 
 
-    @RequestMapping(value = "/gettask", method = RequestMethod.GET)
-    public Task getTask(@RequestParam(value = "tid") int tid) {
-        List<Task> taskList = repository.findByTid(tid);
+    @RequestMapping(value = "/gettask", method = RequestMethod.POST)
+    public Task getTask(@RequestParam(value = "tid") String tid) {
+        List<Task> taskList = repository.findByTid(Integer.parseInt(tid));
         if (taskList.isEmpty())
             return null;
         return taskList.get(0);
     }
 
-    @RequestMapping(value = "/availabletask", method = RequestMethod.GET)
+    @RequestMapping(value = "/availabletask", method = RequestMethod.POST)
     public List<Task> availabletask() {
         List<Task> taskList = repository.findByStatus(Task.STATUS_PUBLISHED);
         return taskList;
     }
 
-    @RequestMapping(value = "/accept", method = RequestMethod.GET)
-    public String accept(@RequestParam(value = "account") String account, @RequestParam(value = "tid") int tid) {
-        List<Task> taskList = repository.findByTid(tid);
+    @RequestMapping(value = "/accept", method = RequestMethod.POST)
+    public String accept(@RequestParam(value = "account") String account, @RequestParam(value = "tid") String tid) {
+        List<Task> taskList = repository.findByTid(Integer.parseInt(tid));
         if (taskList.isEmpty())
             return "task not exist.";
         Task task = taskList.get(0);
@@ -71,20 +72,20 @@ public class TaskController {
         return "success";
     }
 
-    @RequestMapping(value = "/runnerTask", method = RequestMethod.GET)
+    @RequestMapping(value = "/runnerTask", method = RequestMethod.POST)
     public List<Task> runnerTask(@RequestParam(value = "account") String account) {
         List<Task> taskList = repository.findByShipper(account);
         return taskList;
     }
 
 
-    @RequestMapping(value = "/publisherTask", method = RequestMethod.GET)
+    @RequestMapping(value = "/publisherTask", method = RequestMethod.POST)
     public List<Task> publisherTask(@RequestParam(value = "account") String account) {
         List<Task> taskList = repository.findByPublisher(account);
         return taskList;
     }
 
-    @RequestMapping(value = "/gaincargo", method = RequestMethod.GET)
+    @RequestMapping(value = "/gaincargo", method = RequestMethod.POST)
     public String gaincargo(@RequestParam(value = "tid") int tid) {
         List<Task> taskList = repository.findByTid(tid);
         if (taskList.isEmpty())
@@ -95,7 +96,7 @@ public class TaskController {
         return "success";
     }
 
-    @RequestMapping(value = "/delivercargo", method = RequestMethod.GET)
+    @RequestMapping(value = "/delivercargo", method = RequestMethod.POST)
     public String delivercargo(@RequestParam(value = "tid") int tid) {
         List<Task> taskList = repository.findByTid(tid);
         if (taskList.isEmpty())
@@ -106,7 +107,7 @@ public class TaskController {
         return "success";
     }
 
-    @RequestMapping(value = "/finish", method = RequestMethod.GET)
+    @RequestMapping(value = "/finish", method = RequestMethod.POST)
     public String finish(@RequestParam(value = "tid") int tid) {
         List<Task> taskList = repository.findByTid(tid);
         if (taskList.isEmpty())
