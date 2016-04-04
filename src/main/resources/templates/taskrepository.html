@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+
+</head>
+<body>
+    <h1>Task Debug</h1>
+
+    <div class="form">
+        <form action="/publish" method="POST">
+            <input type="text" placeholder="account" name="account"/>
+            <input type="text" placeholder="consignee" name="consignee"/>
+            <input type="text" placeholder="category" name="category"/>
+            <input type="number" placeholder="pay" name="pay"/>
+            <input type="text" placeholder="delivery_time" name="delivery_time"/>
+            <input type="text" placeholder="receiving_time" name="receiving_time"/>
+            <input type="text" placeholder="delivery_address" name="delivery_address"/>
+            <input type="text" placeholder="receiving_address" name="receiving_address"/>
+            <input type="number" placeholder="emergency" name="emergency"/>
+            <button>publish</button>
+        </form>
+
+        <form action="/gettask" method="GET">
+            <input type="number" placeholder="tid" name="tid"/>
+            <button>gettask</button>
+        </form>
+
+        <form action="/availabletask" method="GET">
+            <button>availabletask</button>
+        </form>
+
+        <form action="/accept" method="GET">
+            <input type="text" placeholder="account" name="account"/>
+            <input type="number" placeholder="tid" name="tid"/>
+            <button>accept</button>
+        </form>
+
+        <form action="/runnerTask" method="GET">
+            <input type="text" placeholder="account" name="account"/>
+            <button>runnerTask</button>
+        </form>
+
+        <form action="/publisherTask" method="GET">
+            <input type="text" placeholder="account" name="account"/>
+            <button>publisherTask</button>
+        </form>
+
+        <form action="/gaincargo" method="GET">
+            <input type="number" placeholder="tid" name="tid"/>
+            <button>gaincargo</button>
+        </form>
+
+        <form action="/delivercargo" method="GET">
+            <input type="number" placeholder="tid" name="tid"/>
+            <button>delivercargo</button>
+        </form>
+
+        <form action="/finish" method="GET">
+            <input type="number" placeholder="tid" name="tid"/>
+            <button>finish</button>
+        </form>
+
+        <form action="/rate" method="POST">
+            <input type="number" placeholder="tid" name="tid"/>
+            <input type="number" placeholder="rate" name="rate"/>
+            <input type="text" placeholder="comment" name="comment"/>
+            <button>rate</button>
+        </form>
+
+    </div>
+
+</body>
+</html>
