@@ -27,9 +27,24 @@
 
       <br/><br/>
 
-      <form action="/info" method="GET">
+      <form action="/checkuser" method="POST">
+        <input type="text" placeholder="account" name="account" />
+        <button>checkuser</button>
+      </form>
+
+      <br/><br/>
+
+      <form action="/info" method="POST">
         <input type="text" placeholder="account" name="account" />
         <button>info</button>
+      </form>
+
+      <br/><br/>
+
+      <form action="/setpasswd" method="POST">
+        <input type="text" placeholder="account" name="account" />
+        <input type="text" placeholder="passwd" name="passwd" />
+        <button>setpasswd</button>
       </form>
 
       <br/><br/>
@@ -83,9 +98,41 @@
 
       <br/><br/>
 
-      <form action="/geticon" method="GET">
+      <form action="/geticon" method="POST">
         <input type="text" placeholder="account" name="account" />
         <button>geticon</button>
+      </form>
+
+      <br/><br/>
+
+      <form action="/setlatitude" method="POST">
+        <input type="text" placeholder="account" name="account" />
+        <input type="text" placeholder="latitude" name="latitude" />
+        <button>setlatitude</button>
+      </form>
+
+      <br/><br/>
+
+      <form action="/setlongtitude" method="POST">
+        <input type="text" placeholder="account" name="account" />
+        <input type="text" placeholder="longtitude" name="longtitude" />
+        <button>setlongtitude</button>
+      </form>
+
+      <br/><br/>
+
+      <form action="/setlaunchtasknum" method="POST">
+        <input type="text" placeholder="account" name="account" />
+        <input type="text" placeholder="launchtasknum" name="launchtasknum" />
+        <button>setlaunchtasknum</button>
+      </form>
+
+      <br/><br/>
+
+      <form action="/settaketasknum" method="POST">
+        <input type="text" placeholder="account" name="account" />
+        <input type="text" placeholder="taketasknum" name="taketasknum" />
+        <button>settaketasknum</button>
       </form>
 
       <br/><br/>

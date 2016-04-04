@@ -6,8 +6,10 @@ import javax.annotation.Resource;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+
 @Entity
 public class User {
+
 
     @Id
     private String account;
@@ -15,9 +17,15 @@ public class User {
     private String passwd;
     private String nickname;
     private String icon;
-    private int balance;
+    private double balance;
     private String address;
     private int login;
+
+    private double longtitude;
+    private double latitude;
+
+    private int launchTaskNum;
+    private int takeTaskNum;
 
     private double avgrate;
 
@@ -29,7 +37,7 @@ public class User {
         this.passwd = passwd;
         this.nickname = "null";
         this.icon = "default.jpg";
-        this.balance = 0;
+        this.balance = 0.0;
         this.address = "null";
         this.login = 0;
         this.avgrate = 1.0;
@@ -47,7 +55,7 @@ public class User {
         login = 0;
     }
 
-    public boolean pay(int amount) {
+    public boolean pay(double amount) {
         if (balance < amount)
             return false;
         else {
@@ -56,7 +64,7 @@ public class User {
         }
     }
 
-    public void deposit(int m) {
+    public void deposit(double m) {
         balance += m;
     }
 
@@ -80,7 +88,7 @@ public class User {
         return icon;
     }
 
-    public int getBalance() {
+    public double getBalance() {
         return balance;
     }
 
@@ -100,18 +108,51 @@ public class User {
         this.icon = icon;
     }
 
+
+    public void setLongtitude(double longtitude) {
+        this.longtitude = longtitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLaunchTaskNum(int launchTaskNum) {
+        this.launchTaskNum = launchTaskNum;
+    }
+
+    public void setTakeTaskNum(int takeTaskNum) {
+        this.takeTaskNum = takeTaskNum;
+    }
+
+    public int getLaunchTaskNum() {
+        return launchTaskNum;
+    }
+
+    public int getTakeTaskNum() {
+        return takeTaskNum;
+    }
+
+    public double getLongtitude() {
+        return longtitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
     public void setAddress(String address) {
         this.address = address;
     }
 
-    public void setAvgrate(double avgrate){
+
+    public int getLogin() {
+        return login;
+    }
+
+    public void setAvgrate(double avgrate) {
         this.avgrate = avgrate;
     }
 
-    @Override
-    public String toString() {
-        return String.format(
-                "User[account=%s, passwd='%s', balance='%d']",
-                account, passwd, balance);
-    }
+
 }
