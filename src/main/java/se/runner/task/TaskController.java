@@ -131,4 +131,10 @@ public class TaskController {
         repository.save(task);
         return "success";
     }
+
+    @RequestMapping(value = "/clear", method = RequestMethod.POST)
+    public String clear() {
+        repository.deleteAll();
+        return "success";
+    }
 }
