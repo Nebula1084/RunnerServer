@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.Null;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -29,10 +30,7 @@ public class UserContoller {
     private HttpServletResponse response;
 
 
-
-
-
-    private boolean checkUser(String account){
+    private boolean checkUser(String account) {
         List<User> uList = repository.findByAccount(account);
         if (uList.isEmpty()) {
             return false;
@@ -48,10 +46,9 @@ public class UserContoller {
         else return "yes";
     }
 
-    private User getUser(String account){
+    private User getUser(String account) {
         return repository.findByAccount(account).get(0);
     }
-
 
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -71,9 +68,11 @@ public class UserContoller {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public Object register(@RequestParam(value = "account") String account, @RequestParam(value = "passwd") String passwd) {
+    public Object register(@RequestParam(value = "account") String account, @RequestParam(value = "passwd") String passwd, @RequestParam(value = "nickname") String nickname, @RequestParam(value = "address") String address) {
         if (repository.findByAccount(account).isEmpty()) {
             User newUser = new User(account, passwd);
+            newUser.setNickname(nickname);
+            newUser.setAddress(address);
             repository.save(newUser);
             newUser.login();
             repository.save(newUser);
@@ -81,6 +80,35 @@ public class UserContoller {
         } else {
             return "already exist";
         }
+    }
+
+    @RequestMapping(value = "/addcontact", method = RequestMethod.POST)
+    public Object addcontact(@RequestParam(value = "account") String account, @RequestParam(value = "contact") String contact) {
+        List<User> uList = repository.findByAccount(account);
+        if (uList.isEmpty())
+            return "account not exist.";
+        User user = uList.get(0);
+        uList = repository.findByAccount(contact);
+        if (uList.isEmpty())
+            return "contact account not exist.";
+        User user_contact = uList.get(0);
+        if (user.addContact(user_contact)) {
+            repository.save(user);
+            return "add success";
+        } else
+            return "contact already exist";
+    }
+
+    @RequestMapping(value = "/getcontacts", method = RequestMethod.POST)
+    public Object getcontacts(@RequestParam(value = "account") String account) {
+        List<User> uList = repository.findByAccount(account);
+        if (uList.isEmpty())
+            return "account not exist.";
+        User user = uList.get(0);
+        ArrayList<String> contactsList = new ArrayList<String>();
+        for (User contact : user.getContacts())
+            contactsList.add(contact.getAccount());
+        return contactsList;
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
@@ -151,7 +179,7 @@ public class UserContoller {
         File file = new File("src/main/resources/icon/" + user.getIcon());
 
         FileInputStream inputStream = new FileInputStream(file);
-        byte[] data = new byte[(int)file.length()];
+        byte[] data = new byte[(int) file.length()];
         int length = inputStream.read(data);
         inputStream.close();
 
@@ -182,7 +210,7 @@ public class UserContoller {
     }
 
     @RequestMapping(value = "/pay", method = RequestMethod.POST)
-    public Object pay(@RequestParam(value = "account1") String account1,  @RequestParam(value = "account2") String account2, @RequestParam(value = "amount") String amount) {
+    public Object pay(@RequestParam(value = "account1") String account1, @RequestParam(value = "account2") String account2, @RequestParam(value = "amount") String amount) {
         User user1 = repository.findByAccount(account1).get(0);
         user1.pay(Double.parseDouble(amount));
         repository.save(user1);

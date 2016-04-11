@@ -5,6 +5,10 @@ import javax.annotation.Nullable;
 import javax.annotation.Resource;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.Set;
 
 
 @Entity
@@ -28,6 +32,9 @@ public class User {
     private int takeTaskNum;
 
     private double avgrate;
+
+    @ManyToMany
+    private Set<User> contacts;
 
     protected User() {
     }
@@ -62,6 +69,14 @@ public class User {
             balance -= amount;
             return true;
         }
+    }
+
+    public boolean addContact(User contact) {
+        return contacts.add(contact);
+    }
+
+    public Set<User> getContacts() {
+        return contacts;
     }
 
     public void deposit(double m) {
