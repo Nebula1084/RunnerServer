@@ -23,7 +23,7 @@ public class Task {
     private String delivery_address;
     private String recieving_address;
     private int status;
-    private int rate;
+    private double rate;
     private long gain_time;
     private long arrive_time;
     private String comment;
@@ -81,7 +81,7 @@ public class Task {
         status = STATUS_FINISHED;
     }
 
-    public void setRate(int rate){
+    public void setRate(double rate){
         this.rate = rate;
     }
 
@@ -115,7 +115,7 @@ public class Task {
 
     public int getStatus() {return status; }
 
-    public int getRate(){
+    public double getRate(){
         return rate;
     }
 

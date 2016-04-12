@@ -120,7 +120,7 @@ public class TaskController {
 
     @RequestMapping(value = "/rate", method = RequestMethod.POST)
     public String rate(@RequestParam(value = "tid") int tid,
-                       @RequestParam(value = "rate") int rate,
+                       @RequestParam(value = "rate") double rate,
                        @RequestParam(value = "comment") String comment) {
         List<Task> taskList = repository.findByTid(tid);
         if (taskList.isEmpty())
